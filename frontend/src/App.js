@@ -1,19 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import JobListings from "./pages/JobListings";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import Navbar from "./components/Navbar";
+import Register from "./pages/Register";
 import Login from "./pages/Login";
+import JobList from "./pages/JobList";
+import JobDetail from "./pages/JobDetail";
 
-
-function App() {
+const App = () => {
   return (
-    <Router>
+    <AuthProvider>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<JobList />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/jobs" element={<JobListings />} />
+        <Route path="/jobs/:jobId" element={<JobDetail />} />
       </Routes>
-    </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;

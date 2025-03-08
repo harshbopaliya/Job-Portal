@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="bg-blue-600 p-4 text-white flex justify-between">
-      <h1 className="text-lg font-bold">Job Portal</h1>
-      <div className="space-x-4">
-        <Link to="/" className="hover:text-gray-300">Home</Link>
-        <Link to="/jobs" className="hover:text-gray-300">Jobs</Link>
-        <Link to="/login" className="hover:text-gray-300">Login</Link>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div className="container">
+        <Link to="/" className="navbar-brand">Job Connect</Link>
+        <div>
+          <Link to="/login" className="btn btn-outline-light mx-2">Login</Link>
+          <Link to="/register" className="btn btn-light">Register</Link>
+        </div>
       </div>
     </nav>
   );
