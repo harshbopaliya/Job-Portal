@@ -1,42 +1,39 @@
-import React, { useState, useEffect, useContext } from "react";
-import { fetchJobDetail, applyForJob } from "../api";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const JobDetail = () => {
-  const { jobId } = useParams();
-  const { token } = useContext(AuthContext);
+  const { id } = useParams();
   const [job, setJob] = useState(null);
-  const [coverLetter, setCoverLetter] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchJobDetail(jobId).then((response) => setJob(response.data));
-  }, [jobId]);
+    const fetchJobDetail = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/jobs/${id}/`);
+        setJob(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch job details");
+        setLoading(false);
+      }
+    };
 
-  const handleApply = async () => {
-    if (!token) {
-      alert("You need to log in first!");
-      return;
-    }
-    await applyForJob(jobId, { cover_letter: coverLetter }, token);
-    alert("Application submitted!");
-  };
+    fetchJobDetail();
+  }, [id]);
 
-  if (!job) return <p>Loading...</p>;
+  if (loading) return <p>Loading job details...</p>;
+  if (error) return <p className="error">{error}</p>;
 
   return (
-    <div>
+    <div className="job-detail">
       <h2>{job.title}</h2>
-      <p>
-        {job.company} - {job.location}
-      </p>
+      <h3>{job.company}</h3>
+      <p><strong>Location:</strong> {job.location}</p>
+      <p><strong>Job Type:</strong> {job.job_type}</p>
       <p>{job.description}</p>
-      <h3>Apply for this job</h3>
-      <textarea
-        onChange={(e) => setCoverLetter(e.target.value)}
-        placeholder="Write your cover letter"
-      ></textarea>
-      <button onClick={handleApply}>Apply</button>
+      <button className="btn">Apply Now</button>
     </div>
   );
 };

@@ -1,41 +1,35 @@
 # Virtual environment
+myenv/
 venv/
-env/
+.env
 
 # Python cache
 __pycache__/
-*.py[cod]
-
-# Database files
-*.sqlite3
-db.sqlite3
-
-# Environment variables
-.env
-
-# Django logs
-logs/
-*.log
-
-# Compiled files
 *.pyc
 *.pyo
+*.pyd
 
-# Static and media files
-/static/
-/media/
+# Database files
+db.sqlite3
+*.sqlite3
 
-# Migrations (keep `__init__.py`)
-**/migrations/*
-!**/migrations/__init__.py
+# Logs & Debug files
+*.log
+logs/
+debug.log
 
-# VS Code settings
+# Django static and media files
+staticfiles/
+media/
+
+# Ignore compiled code
+*.so
+
+# Ignore IDE & OS generated files
 .vscode/
-
-# Mac and system files
+.idea/
 .DS_Store
 Thumbs.db
 
-# Coverage reports
-htmlcov/
-.coverage
+# Git specific
+*.swp
